@@ -47,4 +47,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MapsActivity.class);
         startActivity(intent);
     }
+
+    public void goPost(View view) {
+        Intent intent = new Intent(this, PostActivity.class);
+        startActivity(intent);
+    }
 }
