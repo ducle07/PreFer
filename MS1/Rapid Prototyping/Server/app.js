@@ -27,7 +27,14 @@ var userSchema = new mongoose.Schema({
     gender: String,
 });
 
+var polySchema = new mongoose.Schema({
+    name: {type: String, required: true},
+    type: {type: String, default: "Polygon"},
+    coordinates: [{}]
+});
+
 var User = mongoose.model('users', userSchema);
+var Poly = mongoose.model('polygons', polySchema);
 
 app.get('/users', function(req, res) {
     User.find(function(err, users) {
@@ -38,6 +45,12 @@ app.get('/users', function(req, res) {
 app.get('/users/:id', function(req, res) {
     User.find({_id: req.params.id}, function(err, users) {
         res.send(users);
+    });
+});
+
+app.get('/polygon', function(req, res) {
+    Poly.find(function(err, polygon) {
+        res.send(polygon);
     });
 });
 
@@ -53,6 +66,26 @@ app.post('/users', function(req, res) {
         else {
             res.status(200);
             res.send("Nutzer hinzugefügt");
+        }
+    });
+});
+
+app.post('/polygon', function(req, res) {
+    var polygon = new Poly({
+        name: req.body.name,
+        type: req.body.type,
+        coordinates: req.body.coordinates
+    });
+    console.log(req.body);
+    polygon.save(function(err) {
+        if(err) {
+            console.log(err);
+            res.status(400);
+            res.send("Polygon konnte nicht gespeichert werden!");
+        }
+        else {
+            res.status(200);
+            res.send("Polygon wurde gespeichert.");
         }
     });
 });

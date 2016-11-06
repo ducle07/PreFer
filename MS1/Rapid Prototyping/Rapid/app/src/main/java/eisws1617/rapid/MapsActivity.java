@@ -2,12 +2,15 @@ package eisws1617.rapid;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.os.Build;
-import android.support.v4.app.ActivityCompat;
+import android.graphics.Color;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -16,6 +19,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polygon;
 import com.google.android.gms.maps.model.PolygonOptions;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -59,15 +67,43 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             // Show rationale and request permission.
         }
 
-        // Instantiates a new Polygon object and adds points to define a rectangle
-        PolygonOptions rectOptions = new PolygonOptions()
-                .add(new LatLng(37.35, -122.0),
-                        new LatLng(37.45, -122.0),
-                        new LatLng(37.45, -122.2),
-                        new LatLng(37.35, -122.2),
-                        new LatLng(37.35, -122.0));
+        final String url = "http://192.168.1.5:3000/polygon";
+        JsonArrayRequest getRequest = new JsonArrayRequest(url,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.d("Response", response.toString());
+                        try {
+                            JSONObject temp = (JSONObject) response.get(0);
+                            JSONArray array = temp.getJSONArray("coordinates");
+                            JSONObject point1 = (JSONObject) array.get(0);
+                            JSONObject point2 = (JSONObject) array.get(1);
+                            JSONObject point3 = (JSONObject) array.get(2);
 
-        // Get back the mutable Polygon
-        Polygon polygon = mMap.addPolygon(rectOptions);
+                            PolygonOptions rectOptions = new PolygonOptions()
+                                    .add(new LatLng((double) point1.get("latitude"), (double) point1.get("longitude")),
+                                            new LatLng((double) point2.get("latitude"), (double) point2.get("longitude")),
+                                            new LatLng((double) point3.get("latitude"), (double) point3.get("longitude")),
+                                            new LatLng((double) point1.get("latitude"), (double) point1.get("longitude")));
+
+                            // Get back the mutable Polygon
+                            rectOptions.fillColor(Color.RED);
+                            Polygon polygon = mMap.addPolygon(rectOptions);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("Error.Response", error.getMessage());
+                    }
+                }
+
+
+        );
+
+        MySingleton.getInstance(this).addToRequestQueue(getRequest);
     }
 }
