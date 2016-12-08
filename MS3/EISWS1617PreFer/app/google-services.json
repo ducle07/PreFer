@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "431442780276",
+    "firebase_url": "https://eisws1617nguyenle.firebaseio.com",
+    "project_id": "eisws1617nguyenle",
+    "storage_bucket": "eisws1617nguyenle.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:431442780276:android:4caeb8226b3c26b9",
+        "android_client_info": {
+          "package_name": "eisws1617.PreFer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "431442780276-6ov2f136l1j3e4uga0l263asqhskitvg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJzNH6ecWSGcHkM_6phr3w4w5X1qYLJaE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
