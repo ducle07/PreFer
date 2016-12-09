@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 var plantSchema = new Schema({
     id: Number,
     name: String,
-    nutrient {
+    nutrient: {
         nitrogen: Number,
         phosphorus: Number,
         potassium: Number
