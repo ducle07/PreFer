@@ -9,6 +9,23 @@ module.exports = {
         });
     },
     
+    // POST /plant
+    //Für Simulationszwecke müssen Pflanzendaten erstellt und gespeichert werden.
+    postPlant: function(req, res, next) {
+        var plant = new plantModel(req.body);
+        plant.save(function(err) {
+            if(err) {
+                console.log(err);
+                res.status(400);
+                res.send("Error");
+            }
+            else {
+                res.status(200);
+                res.send("Okay");
+            }
+        });
+    },
+    
     // GET /plant/:id
     getPlant: function(req, res, next) {
         plantModel.findById(req.params.id, function(err, plant) {

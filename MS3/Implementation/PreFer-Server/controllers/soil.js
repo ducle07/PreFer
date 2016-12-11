@@ -1,6 +1,7 @@
 var soilModel = require('../models/soil');
 var fieldModel = require('../models/field');
 var plantModel = require('../models/plant');
+var fertilizerModel = require('../models/fertilizer');
 
 module.exports = {
     
@@ -14,20 +15,49 @@ module.exports = {
             if(err)
                 throw err;
         });
-            /*if(err) {
-                console.log(err);
-                res.status(404);
-                res.send("Es konnten keine Bodendaten empfangen werden.");
-            }
-            else {
-                res.status(200);
-                res.send("Es konnten Bodendaten emfpangen werden");
-            }
-        });*/
         
-        //Pflanzendaten holen
+        //Pflanzendaten holen und Berechnung für Beispieldaten durchführen
+        //mögliche weitere neue Modellierung in Betracht ziehen: Nährstoffgehaltsklassen, Standortniveau und Ertragsniveau
         fieldModel.findById(soilData.field_id, function(err, field) {
-            res.send(field);
+            plantModel.findById(field.plant_id, function(err, plant) {
+                var fertilizer = new fertilizerModel({
+                    field_id: field._id,
+                    nutrient: {
+                        nitrogen: 0,
+                        phosphorus: 0,
+                        potassium: 0
+                    },
+                    location: {
+                        latitude: soilData.location.latitude,
+                        longitude: soilData.location.longitude
+                    }
+                });
+                
+                var newNitrogen = plant.nutrient.nitrogen - soilData.nutrient.nitrogen;
+                var newPhosphorus = plant.nutrient.phosphorus - soilData.nutrient.phosphorus;
+                var newPotassium = plant.nutrient.potassium - soilData.nutrient.potassium;
+                
+                if(newNitrogen > 0)
+                    fertilizer.nutrient.nitrogen = newNitrogen;
+                
+                if(newPhosphorus > 0)
+                    fertilizer.nutrient.phosphorus = newPhosphorus;
+                
+                if(newPotassium > 0)
+                    fertilizer.nutrient.potassium = newPotassium;
+                
+                fertilizer.save(function(err) {
+                    if(err) {
+                        console.log(err);
+                        res.status(400);
+                        res.send("Düngeempfehlung konnte nicht berechnet werden.");
+                    }
+                    else {
+                        res.status(200);
+                        res.send("Düngeempfehlung wurde berechnet.");
+                    }
+                });
+            });
         });
     },
     

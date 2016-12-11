@@ -11,7 +11,7 @@ module.exports = {
     
     // GET /fertilizer/:fid/:id
     getOneFertilizerFromField: function(req, res, next) {
-        fetilizerModel.findOne({field_id: req.params.fid, _id: req.params.id}, function(err, fertilizer) {
+        fertilizerModel.findOne({field_id: req.params.fid, _id: req.params.id}, function(err, fertilizer) {
             res.send(fertilizer);
         });
     }
