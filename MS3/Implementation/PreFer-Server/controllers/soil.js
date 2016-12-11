@@ -13,6 +13,7 @@ module.exports = {
         soilData.save(function(err) {
             if(err)
                 throw err;
+        });
             /*if(err) {
                 console.log(err);
                 res.status(404);
@@ -21,8 +22,8 @@ module.exports = {
             else {
                 res.status(200);
                 res.send("Es konnten Bodendaten emfpangen werden");
-            }*/
-        });
+            }
+        });*/
         
         //Pflanzendaten holen
         fieldModel.findById(soilData.field_id, function(err, field) {
