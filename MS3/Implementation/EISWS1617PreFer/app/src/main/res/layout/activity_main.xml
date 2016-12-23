@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Maps"
-        android:onClick="gotoMaps"
+        android:onClick="goPolygon"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true" />
 

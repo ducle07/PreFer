@@ -23,4 +23,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, PostActivity.class);
         startActivity(intent);
     }
+
+    public void goPolygon(View view) {
+        Intent intent = new Intent(this, PolygonActivity.class);
+        startActivity(intent);
+    }
 }
