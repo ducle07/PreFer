@@ -106,14 +106,29 @@ module.exports = {
                 }*/
             });
             
-            fcm.send(message, function(err, response){
-                if (err) {
-                    console.log("Something has gone wrong!");
-                    res.end();
-                } else {
-                    console.log("Successfully sent with response: ", response);
-                    res.end();
-                }
+            
+            fieldModel.findById(soilData.field_id, function(err, field) {
+                plantModel.findById(field.plant_id, function(err, plant) {
+                    if(err)
+                        throw err;
+                    
+                    var newNitrogen = plant.nutrient.nitrogen - soilData.nutrient.nitrogen;
+                    var newPhosphorus = plant.nutrient.phosphorus - soilData.nutrient.phosphorus;
+                    var newPotassium = plant.nutrient.potassium - soilData.nutrient.potassium;
+                    var schwell = 15;
+                    
+                    if(newNitrogen > 15 && newPhosphorus > 15 && newPotassium > 15) {
+                        fcm.send(message, function(err, response){
+                            if (err) {
+                                console.log("Something has gone wrong!");
+                                res.end();
+                            } else {
+                                console.log("Successfully sent with response: ", response);
+                                res.end();
+                            }
+                        });
+                    }
+                });
             });
         });
     }

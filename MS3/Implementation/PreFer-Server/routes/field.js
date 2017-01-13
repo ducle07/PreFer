@@ -6,7 +6,7 @@ router.route('/field')
     .post(fieldController.postField);
 
 router.route('/field/:id')
-    .get(fieldController.getField)
+    .get(fieldController.getFieldById)
     .put(fieldController.putField)
     .delete(fieldController.deleteField);
 

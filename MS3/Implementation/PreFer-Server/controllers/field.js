@@ -20,6 +20,7 @@ module.exports = {
                 res.send("Feld konnte nicht hinzugefügt werden!");
             }
             else {
+                console.log("POST erhalten.");
                 res.status(200);
                 res.send("Feld hinzugefügt");
             }
@@ -27,7 +28,7 @@ module.exports = {
     },
     
     // GET /field/:id
-    getField: function(req, res, next) {
+    getFieldById: function(req, res, next) {
         fieldModel.findById(req.params.id, function(err, field) {
             res.send(field);
         });

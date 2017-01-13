@@ -1,0 +1,169 @@
+[{
+	"field_id": "584d6a52f7a1713230bec060",
+	"nutrient": {
+		"nitrogen": 40,
+		"phosphorus": 20,
+		"potassium": 5
+		},
+	"location": {
+		"latitude": 51.062646,
+		"longitude": 7.463662
+		}
+},
+ {
+    "field_id": "584d6a52f7a1713230bec060",
+	"nutrient": {
+		"nitrogen": 37,
+		"phosphorus": 17,
+		"potassium": 8
+		},
+	"location": {
+		"latitude": 51.062646,
+		"longitude": 7.463662
+		}
+ },
+ {
+    "field_id": "584d6a52f7a1713230bec060",
+	"nutrient": {
+		"nitrogen": 35,
+		"phosphorus": 22,
+		"potassium": 12
+		},
+	"location": {
+		"latitude": 51.062474,
+		"longitude": 7.464823
+		}
+ },
+ {
+    "field_id": "584d6a52f7a1713230bec060",
+	"nutrient": {
+		"nitrogen": 32,
+		"phosphorus": 26,
+		"potassium": 15
+		},
+	"location": {
+		"latitude": 51.062055,
+		"longitude": 7.465402
+		}
+ },
+ {
+    "field_id": "584d6a52f7a1713230bec060",
+	"nutrient": {
+		"nitrogen": 43,
+		"phosphorus": 30,
+		"potassium": 17
+		},
+	"location": {
+		"latitude": 51.061680,
+		"longitude": 7.465255
+		}
+ },
+ {
+    "field_id": "584d6a52f7a1713230bec060",
+	"nutrient": {
+		"nitrogen": 48,
+		"phosphorus": 28,
+		"potassium": 13
+		},
+	"location": {
+		"latitude": 51.061237,
+		"longitude": 7.465003
+		}
+ },
+ {
+    "field_id": "584d6a52f7a1713230bec060",
+	"nutrient": {
+		"nitrogen": 50,
+		"phosphorus": 32,
+		"potassium": 18
+		},
+	"location": {
+		"latitude": 51.0660713,
+		"longitude": 7.464753
+		}
+ },
+ {
+    "field_id": "584d6a52f7a1713230bec060",
+	"nutrient": {
+		"nitrogen": 14,
+		"phosphorus": 15,
+		"potassium": 5
+		},
+	"location": {
+		"latitude": 51.060471,
+		"longitude": 7.463954
+		}
+ },
+ {
+    "field_id": "584d6a52f7a1713230bec060",
+	"nutrient": {
+		"nitrogen": 10,
+		"phosphorus": 5,
+		"potassium": 8
+		},
+	"location": {
+		"latitude": 51.062683,
+		"longitude": 7.464178
+		}
+ },
+ {
+    "field_id": "584d6a52f7a1713230bec060",
+	"nutrient": {
+		"nitrogen": 20,
+		"phosphorus": 15,
+		"potassium": 8
+		},
+	"location": {
+		"latitude": 51.060622,
+		"longitude": 7.463022
+		}
+ },
+ {
+    "field_id": "584d6a52f7a1713230bec060",
+	"nutrient": {
+		"nitrogen": 22,
+		"phosphorus": 13,
+		"potassium": 4
+		},
+	"location": {
+		"latitude": 51.061201,
+		"longitude": 7.462880
+		}
+ },
+ {
+    "field_id": "584d6a52f7a1713230bec060",
+	"nutrient": {
+		"nitrogen": 17,
+		"phosphorus": 24,
+		"potassium": 16
+		},
+	"location": {
+		"latitude": 51.061850,
+		"longitude": 7.463260
+		}
+ },
+ {
+    "field_id": "584d6a52f7a1713230bec060",
+	"nutrient": {
+		"nitrogen": 10,
+		"phosphorus": 7,
+		"potassium": 11
+		},
+	"location": {
+		"latitude": 51.061135,
+		"longitude": 7.463661
+		}
+ },
+ {
+    "field_id": "584d6a52f7a1713230bec060",
+	"nutrient": {
+		"nitrogen": 16,
+		"phosphorus": 13,
+		"potassium": 18
+		},
+	"location": {
+		"latitude": 51.061978,
+		"longitude": 7.464069
+		}
+ }
+]

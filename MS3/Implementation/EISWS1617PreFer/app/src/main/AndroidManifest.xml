@@ -55,7 +55,9 @@
             </intent-filter>
         </service>
         <!-- [END firebase_iid_service] -->
-        <activity android:name=".PolygonActivity"></activity>
+        <activity android:name=".CreatePolygonActivity" />
+        <activity android:name=".HeatMapActivity" />
+        <activity android:name=".ShowPolygonActivity"></activity>
     </application>
 
 </manifest>

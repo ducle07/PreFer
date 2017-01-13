@@ -19,13 +19,13 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void goPost(View view) {
-        Intent intent = new Intent(this, PostActivity.class);
+    public void goHeatMap(View view) {
+        Intent intent = new Intent(this, ShowPolygonActivity.class);
         startActivity(intent);
     }
 
     public void goPolygon(View view) {
-        Intent intent = new Intent(this, PolygonActivity.class);
+        Intent intent = new Intent(this, CreatePolygonActivity.class);
         startActivity(intent);
     }
 }
