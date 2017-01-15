@@ -3,12 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="eisws1617.PreFer.AddActivity">
-
     <item
-        android:id="@+id/check"
-        android:title="@string/check"
-        android:orderInCategory="200"
-        android:icon="@drawable/ic_check_white_36dp"
-        app:showAsAction="always"/>
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="Settings"
+        app:showAsAction="never"></item>
 
 </menu>

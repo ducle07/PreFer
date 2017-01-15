@@ -14,7 +14,7 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="Precision Fertilizer"
+        android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
@@ -36,6 +36,10 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDpcl6z95Tpy1_ZQ0JUD_0u6qCFNXSk6NQ" />
 
+        <activity
+            android:name=".MapsActivity"
+            android:label="@string/title_activity_maps" />
+
         <!-- [START firebase_service] -->
         <service android:name=".MyFirebaseMessagingService">
             <intent-filter>
@@ -50,6 +54,8 @@
             </intent-filter>
         </service>
         <!-- [END firebase_iid_service] -->
+        <activity android:name=".CreatePolygonActivity" />
+        <activity android:name=".HeatMapActivity" />
         <activity android:name=".ShowPolygonActivity" />
         <activity android:name=".ListActivity" />
         <activity
