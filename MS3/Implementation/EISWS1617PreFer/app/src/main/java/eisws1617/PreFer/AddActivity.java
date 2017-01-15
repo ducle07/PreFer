@@ -1,5 +1,6 @@
 package eisws1617.PreFer;
 
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -9,10 +10,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class AddActivity extends AppCompatActivity {
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class AddActivity extends AppCompatActivity implements AddTabInfoFragment.OnDataPass {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -51,23 +56,19 @@ public class AddActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_hinzufuegen, menu);
+        // Inflate the add_menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.add_menu, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.check:
+                Intent intent = new Intent(AddActivity.this, AddActivity.class);
+                AddActivity.this.startActivity(intent);
+                break;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -117,6 +118,14 @@ public class AddActivity extends AppCompatActivity {
                     return "Duenger";
             }
             return null;
+        }
+    }
+
+    public void onDataPass(JSONObject data) {
+        try {
+            Log.d("LOG", "hello " + data.get("name"));
+        } catch(JSONException e) {
+            e.printStackTrace();
         }
     }
 }
