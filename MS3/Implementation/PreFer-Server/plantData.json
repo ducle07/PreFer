@@ -1,0 +1,73 @@
+[{
+	"name": "Gurke",
+	"nutrient": {
+		"nitrogen": 50,
+		"phosphorus": 25,
+		"potassium": 20
+	}
+},
+ {
+	"name": "Tomate",
+	"nutrient": {
+		"nitrogen": 60,
+		"phosphorus": 28,
+		"potassium": 40
+	}
+},
+ {
+	"name": "Karotte",
+	"nutrient": {
+		"nitrogen": 70,
+		"phosphorus": 30,
+		"potassium": 40
+	}
+},
+ {
+	"name": "Zwiebel",
+	"nutrient": {
+		"nitrogen": 40,
+		"phosphorus": 20,
+		"potassium": 50
+	}
+},
+ {
+	"name": "Kartoffel",
+	"nutrient": {
+		"nitrogen": 80,
+		"phosphorus": 30,
+		"potassium": 60
+	}
+},
+ {
+	"name": "Weizen",
+	"nutrient": {
+		"nitrogen": 100,
+		"phosphorus": 50,
+		"potassium": 30
+	}
+},
+ {
+	"name": "Mais",
+	"nutrient": {
+		"nitrogen": 110,
+		"phosphorus": 55,
+		"potassium": 36
+	}
+},
+ {
+	"name": "Gerste",
+	"nutrient": {
+		"nitrogen": 100,
+		"phosphorus": 50,
+		"potassium": 30
+	}
+},
+ {
+	"name": "Sonnenblume",
+	"nutrient": {
+		"nitrogen": 60,
+		"phosphorus": 80,
+		"potassium": 99
+	}
+}
+]

@@ -14,13 +14,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void gotoMaps(View view) {
-        Intent intent = new Intent(this, MapsActivity.class);
-        startActivity(intent);
-    }
-
-    public void goHeatMap(View view) {
-        Intent intent = new Intent(this, ShowPolygonActivity.class);
+    public void goList(View view) {
+        Intent intent = new Intent(this, ListActivity.class);
         startActivity(intent);
     }
 

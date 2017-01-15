@@ -29,7 +29,7 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
     }
 
     private void sendRegistrationToServer(String token) {
-        final String url = "http://192.168.1.5:3000/fcm";
+        final String url = "http://192.168.1.12:3000/fcm";
 
         JSONObject obj = new JSONObject();
 
