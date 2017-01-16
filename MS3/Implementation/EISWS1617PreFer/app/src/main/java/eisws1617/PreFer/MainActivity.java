@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+//Die Main-Activity beinhaltet lediglich einen Start-Button, der in die ListActivity leitet.
 
 public class MainActivity extends AppCompatActivity {
 

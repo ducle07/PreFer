@@ -1,3 +1,5 @@
+//Das ist der Model, wie die Pflanzen-Daten in der Datenbank gespeichert werden.
+
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 

@@ -5,9 +5,8 @@ import android.content.Context;
 import com.android.volley.*;
 import com.android.volley.toolbox.Volley;
 
-/**
- * Created by DucGiang on 01.11.2016.
- */
+// Das ist eine Helfer-Klasse, die von die Requests zuständig ist.
+// Für die Nutzung der volley-Library ist sie unerlässlich.
 
 public class MySingleton {
     private static MySingleton mInstance;
@@ -28,8 +27,6 @@ public class MySingleton {
 
     public RequestQueue getRequestQueue() {
         if (mRequestQueue == null) {
-            // getApplicationContext() is key, it keeps you from leaking the
-            // Activity or BroadcastReceiver if someone passes one in.
             mRequestQueue = Volley.newRequestQueue(mCtx.getApplicationContext());
         }
         return mRequestQueue;

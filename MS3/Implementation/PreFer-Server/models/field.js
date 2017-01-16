@@ -1,3 +1,5 @@
+//Das ist der Model, wie die Felddaten in der Datenbank gespeichert werden.
+
 var mongoose = require('mongoose');
 var plantModel = require('./plant');
 

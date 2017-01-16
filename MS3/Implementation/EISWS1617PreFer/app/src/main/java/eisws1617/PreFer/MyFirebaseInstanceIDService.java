@@ -20,6 +20,10 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
     private static final String TAG = "MyFirebaseIIDService";
 
+    //Sobald die App neu installiert wird, wird ein Token für diese App erzeugt
+    //Durch den Aufruf der Methode "sendRegistrationToServer" wird dieser Token durch einen POST-Request
+    //an den Server gesendet.
+
     @Override
     public void onTokenRefresh() {
         String refreshedToken = FirebaseInstanceId.getInstance().getToken();

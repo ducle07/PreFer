@@ -1,8 +1,6 @@
 package eisws1617.PreFer;
 
-import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -11,31 +9,20 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
+//Diese Activity stellt die in dem Server gespeicherten Daten dar,
+//indem sie die Felddaten aus dem Server holt und präsentiert.
 
 public class DisplayActivity extends AppCompatActivity {
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
     private ViewPager mViewPager;
+
+    //Es wird die View für die Activity erstellt, sobald die Activity geöffnet wird.
+    //Sie besteht aus einem Tabs-Menü.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +31,9 @@ public class DisplayActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
+
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
@@ -56,10 +41,10 @@ public class DisplayActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(mViewPager);
     }
 
+    //Das Menü wird erzeugt, sobald Activity geöffnet wurde.
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the add_menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.display_menu, menu);
         return true;
     }
@@ -68,6 +53,8 @@ public class DisplayActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         return super.onOptionsItemSelected(item);
     }
+
+    //In dieser Adapter-Klasse werden die Tabs des Menü erzeugt.
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
@@ -98,7 +85,6 @@ public class DisplayActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
             return 3;
         }
 

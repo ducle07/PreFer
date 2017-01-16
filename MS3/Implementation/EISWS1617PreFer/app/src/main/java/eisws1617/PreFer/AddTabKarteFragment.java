@@ -7,15 +7,10 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
 import com.google.android.gms.maps.MapView;
@@ -31,9 +26,12 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+//Dieses Fragment erzeugt eine MapView unter dem Tab "Karte".
+
 public class AddTabKarteFragment extends Fragment
         implements OnMapClickListener, OnMapReadyCallback {
 
+    //Das Interface dient zur Kommunikation zwischen Activity und Fragment.
     public interface OnDataPass {
         void onDataPass(JSONObject json);
     }
@@ -58,6 +56,8 @@ public class AddTabKarteFragment extends Fragment
 
     private ArrayList<LatLng> fieldArea = new ArrayList<>();
 
+    //Diese Methode erzeugt die View, sobald das Fragment geöffnet wurde.
+    //
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_add_tab_karte, container, false);
@@ -77,39 +77,45 @@ public class AddTabKarteFragment extends Fragment
         return rootView;
     }
 
+    //Sobald die View erzeugt wurde, wird eine Karte von Google Maps in der View dargestellt.
+    //Die dargestellte Karte ist eine Satellitenkarte.
+    //Die Karte horcht auf Klicken der Karte durch den Nutzer.
+
     @Override
     public void onMapReady(GoogleMap map) {
         googleMap = map;
         googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
         googleMap.setOnMapClickListener(this);
-
-        if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED) {
-            googleMap.setMyLocationEnabled(true);
-        }
     }
+
+    //Wenn ein Nutzer auf die Karte klickt, dann wird ein Punkt gesetzt, der anschließend in der Liste "fieldArea"
+    //gespeichert wird. Es können maximal fünf Punkte (siehe maxPoints) gesetzt werden.
 
     @Override
     public void onMapClick(LatLng point) {
         LatLng = point;
         fieldArea.add(LatLng);
+        int maxPoints = 5;
 
+        //Vordefinierte Einstellungen für das Polygon
         PolygonOptions fieldOptions = new PolygonOptions();
         fieldOptions.fillColor(0x7FFF0000);
         fieldOptions.strokeColor(Color.BLACK);
         fieldOptions.strokeWidth(2);
 
-        if (fieldArea.size() == 5) {
+        if (fieldArea.size() == maxPoints) {
             buildJSON();
         }
 
-        if (fieldArea.size() > 5) {
+        if (fieldArea.size() > maxPoints) {
             return;
         } else {
             for (int i = 0; i < fieldArea.size(); i++) {
                 fieldOptions.add(fieldArea.get(i));
             }
-            googleMap.addPolygon(fieldOptions);
+            googleMap.addPolygon(fieldOptions); //Polygon wird auf der Karte erzeugt.
+
+            //Die Größe des Polygons wird berechnet und in ha umgewandelt.
             fieldSize = SphericalUtil.computeArea(fieldArea) / 10000;
             fieldSize = fieldSize * 100;
             fieldSize = Math.round(fieldSize);
@@ -117,6 +123,8 @@ public class AddTabKarteFragment extends Fragment
         }
     }
 
+    //Diese Methode baut mithilfe der Größe und der Koordinaten des Polygons ein JSON-Objekt.
+    //Durch die passData-Methode wird dieses JSON-Objekt an die parent-Activity(AddActivity) gesendet.
     public void buildJSON() {
         JSONObject json = new JSONObject();
         JSONArray outline = new JSONArray();
@@ -142,6 +150,7 @@ public class AddTabKarteFragment extends Fragment
         }
     }
 
+    //Diese Methode schickt Daten von dieser Fragment an die parent-Activity.
     public void passData(JSONObject data) {
         dataPass.onDataPass(data);
     }

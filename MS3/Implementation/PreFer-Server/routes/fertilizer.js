@@ -1,3 +1,12 @@
+//Das ist der Router für die Düngeempfehlungen
+//Folgenden Routen sind verfügbar:
+//
+// /fertilizer/:fid 
+// /fertilizer/:fid/:id
+//
+// fid = fieldID
+// id = fertilizerID
+
 var router = require('express').Router();
 var fertilizerController = require('../controllers/fertilizer');
 

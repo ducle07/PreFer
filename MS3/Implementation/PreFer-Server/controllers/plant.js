@@ -15,8 +15,7 @@ module.exports = {
         var plant = new plantModel(req.body);
         plant.save(function(err) {
             if(err) {
-                console.log(err);
-                res.status(400);
+                res.status(500);
                 res.send("Error");
             }
             else {

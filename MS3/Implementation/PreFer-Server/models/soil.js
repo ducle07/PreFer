@@ -1,3 +1,5 @@
+//Das ist der Model, wie die Boden-Daten in der Datenbank gespeichert werden.
+
 var mongoose = require('mongoose');
 var fieldModel = require('./field');
 var Schema = mongoose.Schema;

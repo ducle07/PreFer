@@ -16,7 +16,6 @@ module.exports = {
     sendSoilData: function(req, res, next) {
         // Im Server zwischenspeichern
         var soilData = new soilModel(req.body);
-        //console.log(req.body);
         soilData.save(function(err) {
             if(err)
                 throw err;
@@ -25,6 +24,7 @@ module.exports = {
         //Pflanzendaten holen und Berechnung für Beispieldaten durchführen
         fieldModel.findById(soilData.field_id, function(err, field) {
             plantModel.findById(field.plant_id, function(err, plant) {
+                //Fertilizer-Objekt erstellen
                 var fertilizer = new fertilizerModel({
                     field_id: field._id,
                     nutrient: {
@@ -38,10 +38,13 @@ module.exports = {
                     }
                 });
                 
+                //Neue Nährstoffwerte berechen anhand der Pflanzen-Nährstoffsollwerte und den Bodendaten
                 var newNitrogen = plant.nutrient.nitrogen - soilData.nutrient.nitrogen;
                 var newPhosphorus = plant.nutrient.phosphorus - soilData.nutrient.phosphorus;
                 var newPotassium = plant.nutrient.potassium - soilData.nutrient.potassium;
                 
+                //Nährstoffwerte im Fertilizer-Objekt sollen nur verändert werden,
+                //wenn sie größer als 0 sind.
                 if(newNitrogen > 0)
                     fertilizer.nutrient.nitrogen = newNitrogen;
                 
@@ -53,8 +56,7 @@ module.exports = {
                 
                 fertilizer.save(function(err) {
                     if(err) {
-                        console.log(err);
-                        res.status(400);
+                        res.status(500);
                         res.send("Düngeempfehlung konnte nicht berechnet werden.");
                     }
                     else {
@@ -68,7 +70,7 @@ module.exports = {
     
     //PUT /soil/:fid/:id
     //Bodensensoren aktualisieren die geschickten Bodendaten.
-    //Push-Notifications werden gesendet, wenn die Nährstoffwerte unter einem bestimmten Schwellwert sinken.
+    //Push-Notifications werden gesendet, wenn die neu berechneten Düngeempfehlungen einzelnd größer sind als der Schwellwert.
     
     updateSoilData: function(req, res, next) {
         // Bodendaten aktualisieren, damit die in der Datenbank gespeicherten Daten aktuell sind
@@ -87,6 +89,8 @@ module.exports = {
                 }
             });
             
+            //Es werden mehrere Datenbanken-Abfragen gestartet:
+            //fcmModel, fieldModel und plantModel
             fcmModel.find(function(err, fcmtoken) {            
                 fieldModel.findById(soilData.field_id, function(err, field) {
                     plantModel.findById(field.plant_id, function(err, plant) {
@@ -121,6 +125,8 @@ module.exports = {
                         var newPotassium = plant.nutrient.potassium - soilData.nutrient.potassium;
                         var schwellWert = 15;
                         
+                        //Befinden sich die neu berechneten Nährstoffwerte alle einzelnd über dem Schwellwert,
+                        //dann wird eine Push-Notification an den Client gesendet.
                         if(newNitrogen > schwellWert && newPhosphorus > schwellWert && newPotassium > schwellWert) {
                             fcm.send(message, function(err, response){
                                 if (err) {
@@ -140,11 +146,11 @@ module.exports = {
                         if(newPotassium > 0)
                             fertilizer.nutrient.potassium = newPotassium;
 
-                        //Neue Düngeempfehlung wurde berechnet und muss in der Datenbank gespeichert werden
+                        //Neue Düngeempfehlung muss in der Datenbank gespeichert werden
                         fertilizer.save(function(err) {
                             if(err) {
                                 console.log(err);
-                                res.status(400);
+                                res.status(500);
                                 res.send("ERROR!");
                             }
                             else {

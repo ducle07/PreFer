@@ -3,15 +3,15 @@ var fieldModel = require('../models/field');
 module.exports = {
     
     // GET /field
+    // Aufgrund der Tatsache, dass dem Client die ID des Feldes nicht bekannt ist, muss testweise anhand des Namen des Feldes die Felder eindeutig bestimmt werden.
+    // Namen dürfen keine Leerzeichen haben und nur einmal vorkommen bzw. einzigartig sein.
     getAllField: function(req, res, next) {
         if(req.query.name !== undefined) {
-            console.log(req.query.name);
             fieldModel.findOne( {name: req.query.name}, function(err, field) {
                 res.send(field);
             });
         } 
         else {
-            console.log(req.query.name);
             fieldModel.find(function(err, field) {
                 res.send(field);
             });
@@ -21,15 +21,13 @@ module.exports = {
     // POST /field
     postField: function(req, res, next) {
         var field = new fieldModel(req.body);
-        //console.log(req.body);
         field.save(function(err) {
             if(err) {
                 console.log(err);
-                res.status(404);
+                res.status(500);
                 res.send("Feld konnte nicht hinzugefügt werden!");
             }
             else {
-                console.log("POST erhalten.");
                 res.status(200);
                 res.send("Feld hinzugefügt");
             }
@@ -57,10 +55,11 @@ module.exports = {
             field.save(function(err) {
                 if(err) {
                     console.log(err);
-                    res.status(404);
+                    res.status(500);
                     res.send("Feld mit der ID "+ req.params.id +" konnte nicht aktualisiert werden!");
                 }
                 else {
+                    res.status(200);
                     res.send("Feld mit der ID "+ req.params.id +" wurde aktualisiert!");
                 }
             });
@@ -76,8 +75,8 @@ module.exports = {
             field.remove(function(err) {
                 if(err) {
                     console.log(err);
-                    res.status(404);
-                    res.send("Feld mit der ID "+ req.params.id +" konnte nicht gefunden werden.");
+                    res.status(500);
+                    res.send("Feld mit der ID "+ req.params.id +" konnte nicht gelöscht werden.");
                 }
                 else {
                     res.status(200);

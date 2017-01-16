@@ -1,5 +1,6 @@
 var FCM = require('fcm-node');
 var fcmModel = require('../models/fcm');
+//Der Serverkey, der von Google für die Nutzung des FCM-Services erstellt wurde.
 var serverKey = 'AAAAZHP-YHQ:APA91bHHbcC3PYFjwNlJw8-lntCSFg1PYUBSX3RBkYTN755HTF97x3iGMor6WUF9ZW8OO9d7Z_KY6CE6b00_-7SeVrTC2GImwSZf8teYL9NiDk93aBvGuWmd2a20Yj6oK8jaKjsD-aNsysU6uBUi7d5J-nQtUvK4Hw';
 var fcm = new FCM(serverKey);
 
@@ -9,30 +10,22 @@ module.exports = {
     // GET /fcm
     sendMessage: function(req, res, next) {
         fcmModel.find(function(err, fcmtoken) {
+            //message ist das Objekt, das die Push-Notification repräsentiert.
             var message = {
                 to: fcmtoken[0].token, 
-                collapse_key: 'your_collapse_key',
-
                 notification: {
                     title: 'Das ist eine Push-Notification!', 
                     body: 'Das ist der Inhalt der Notification!' 
-                },
-
-                data: { 
-                    my_key: 'my value',
-                    my_another_key: 'my another value'
                 }
             };
             
             fcm.send(message, function(err, response){
-                
                 if (err) {
                     console.log("Something has gone wrong!");
                 } else {
                     console.log("Successfully sent with response: ", response);
                 }
             });
-            
             res.end();
         });
     },
@@ -51,7 +44,7 @@ module.exports = {
         fcm.save(function(err) {
             if(err) {
                 console.log(err);
-                res.status(400);
+                res.status(500);
                 res.send("Token konnte nicht gespeichert werden.");
             }
             else {

@@ -1,3 +1,5 @@
+//Das ist der Model, in welcher Form die Düngeempfehlungen in der Datenbank gespeichert werden
+
 var mongoose = require('mongoose');
 var fieldModel = require('./field');
 var Schema = mongoose.Schema;

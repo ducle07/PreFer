@@ -44,6 +44,9 @@ public class ListActivity extends AppCompatActivity {
 
         final ListView lv = (ListView) findViewById(R.id.listView1);
 
+        //Bevor die ListView erzeugt werden kann, müssen die Felddaten aus dem Server geholt werden
+        //und deren Namen als ListItem präsentiert werden.
+
         final String url = "http://192.168.1.12:3000/field";
         JsonArrayRequest getRequest = new JsonArrayRequest(url,
                 new Response.Listener<JSONArray>() {
@@ -78,6 +81,8 @@ public class ListActivity extends AppCompatActivity {
         );
 
         MySingleton.getInstance(this).addToRequestQueue(getRequest);
+
+        //Im onItemClickListener wird gesagt, dass beim Klicken eines ListItems die DisplayActivity dieses Item geöffnet werden soll.
 
         lv.setOnItemClickListener(new OnItemClickListener() {
             @Override

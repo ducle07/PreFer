@@ -24,26 +24,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+//Diese Activity stellt den Screen zum Hinzufügen eines neuen Feldes dar.
+//Sie besteht aus zwei weiteren Fragments.
+
 public class AddActivity extends AppCompatActivity
         implements AddTabKarteFragment.OnDataPass {
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
     private ViewPager mViewPager;
 
     JSONObject json = new JSONObject();
 
+    //Es wird die View für die Activity erstellt, sobald die Activity geöffnet wird.
+    //Sie besteht aus einem Tabs-Menü.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,11 +45,9 @@ public class AddActivity extends AppCompatActivity
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
+
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
-        // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
@@ -63,10 +55,9 @@ public class AddActivity extends AppCompatActivity
         tabLayout.setupWithViewPager(mViewPager);
     }
 
-
+    //Das Menü wird erzeugt, sobald Activity geöffnet wurde.
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the add_menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.add_menu, menu);
         return true;
     }
@@ -75,6 +66,11 @@ public class AddActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.check:
+                //Ein JSON-Objekt wird gebaut, das aus dem Namen, der Größe des Feldes und
+                //der Koordinaten des Polygons besteht.
+                //Dieses JSON-Objekt wird durch ein POST-Request an den Server gesendet,
+                //sobald der Nutzer den Button "check" betätigt.
+
                 EditText editText = (EditText) findViewById(R.id.editText_name);
                 JSONObject tempObject = new JSONObject();
                 try {
@@ -96,6 +92,7 @@ public class AddActivity extends AppCompatActivity
         }
     }
 
+    //In dieser Adapter-Klasse werden die Tabs des Menü erzeugt.
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
@@ -118,7 +115,6 @@ public class AddActivity extends AppCompatActivity
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
             return 2;
         }
 
@@ -134,14 +130,18 @@ public class AddActivity extends AppCompatActivity
         }
     }
 
+    //Diese Methode dient zum Datenaustausch zwischen Fragment und Activity.
     public void onDataPass(JSONObject data) {
         json = getJSON(data);
     }
 
+    //Diese Methode wird benötigt, um die Daten aus der onDataPass-Methode zu holen
+    //und als JSONObject zurückzugeben.
     public JSONObject getJSON(JSONObject json) {
         return json;
     }
 
+    //Diese Methode führt ein POST-Request mithilfe der volley-Library aus auf die URL "url".
     public void sendPOST(JSONObject jsonObject) {
         final String url = "http://192.168.1.12:3000/field";
 
