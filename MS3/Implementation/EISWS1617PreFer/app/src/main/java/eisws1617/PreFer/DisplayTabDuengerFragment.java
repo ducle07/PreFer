@@ -14,16 +14,22 @@ import android.view.ViewGroup;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.PolygonOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class DisplayTabDuengerFragment extends Fragment {
 
@@ -50,7 +56,7 @@ public class DisplayTabDuengerFragment extends Fragment {
                 googleMap = mMap;
                 googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
 
-                if (ContextCompat.checkSelfPermission(getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION)
+                if (ContextCompat.checkSelfPermission(getContext(), android.Manifest.permission.ACCESS_FINE_LOCATION)
                         == PackageManager.PERMISSION_GRANTED) {
                     mMap.setMyLocationEnabled(true);
                 }
@@ -66,16 +72,31 @@ public class DisplayTabDuengerFragment extends Fragment {
                                     JSONArray array = response.getJSONArray("outline");
 
                                     PolygonOptions rectOptions = new PolygonOptions();
+                                    ArrayList<LatLng> latlngList = new ArrayList<>();
 
                                     for(int i=0; i<array.length(); i++) {
                                         JSONObject point = (JSONObject) array.get(i);
-                                        rectOptions.add(new LatLng((double) point.get("latitude"), (double) point.get("longitude")));
+                                        double lat = (double) point.get("latitude");
+                                        double lng = (double) point.get("longitude");
+                                        rectOptions.add(new LatLng(lat, lng));
+                                        latlngList.add(new LatLng(lat, lng));
                                     }
 
-                                    rectOptions.fillColor(Color.GREEN);
+                                    rectOptions.fillColor(0x7F00FF00);
                                     rectOptions.strokeWidth(4);
                                     rectOptions.strokeColor(Color.BLACK);
                                     googleMap.addPolygon(rectOptions);
+
+                                    LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                                    for (LatLng point : latlngList) {
+                                        builder.include(point);
+                                    }
+                                    LatLngBounds bounds = builder.build();
+
+                                    int padding = 100;
+                                    CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+
+                                    googleMap.moveCamera(cu);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }

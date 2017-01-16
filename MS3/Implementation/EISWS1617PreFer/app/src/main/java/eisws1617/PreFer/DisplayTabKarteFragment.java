@@ -15,20 +15,22 @@ import android.view.ViewGroup;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.PolygonOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/**
- * Created by Thuy Trang Nguyen on 14.01.2017.
- */
+import java.util.ArrayList;
+
 
 public class DisplayTabKarteFragment extends Fragment {
 
@@ -71,15 +73,30 @@ public class DisplayTabKarteFragment extends Fragment {
                                     JSONArray array = response.getJSONArray("outline");
 
                                     PolygonOptions rectOptions = new PolygonOptions();
+                                    ArrayList<LatLng> latlngList = new ArrayList<>();
 
                                     for(int i=0; i<array.length(); i++) {
                                         JSONObject point = (JSONObject) array.get(i);
-                                        rectOptions.add(new LatLng((double) point.get("latitude"), (double) point.get("longitude")));
+                                        double lat = (double) point.get("latitude");
+                                        double lng = (double) point.get("longitude");
+                                        rectOptions.add(new LatLng(lat, lng));
+                                        latlngList.add(new LatLng(lat, lng));
                                     }
 
-                                    rectOptions.fillColor(Color.RED);
+                                    rectOptions.fillColor(0x7FFF0000);
                                     rectOptions.strokeWidth(4);
                                     googleMap.addPolygon(rectOptions);
+
+                                    LatLngBounds.Builder builder = new LatLngBounds.Builder();
+                                    for (LatLng point : latlngList) {
+                                        builder.include(point);
+                                    }
+                                    LatLngBounds bounds = builder.build();
+
+                                    int padding = 100;
+                                    CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, padding);
+
+                                    googleMap.moveCamera(cu);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }

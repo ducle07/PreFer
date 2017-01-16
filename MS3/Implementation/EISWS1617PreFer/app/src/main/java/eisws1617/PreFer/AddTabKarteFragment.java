@@ -95,8 +95,8 @@ public class AddTabKarteFragment extends Fragment
         fieldArea.add(LatLng);
 
         PolygonOptions fieldOptions = new PolygonOptions();
-        fieldOptions.fillColor(Color.RED);
-        fieldOptions.strokeColor(Color.RED);
+        fieldOptions.fillColor(0x7FFF0000);
+        fieldOptions.strokeColor(Color.BLACK);
         fieldOptions.strokeWidth(2);
 
         if (fieldArea.size() == 5) {

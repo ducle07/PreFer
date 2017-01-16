@@ -1,5 +1,6 @@
 package eisws1617.PreFer;
 
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -113,9 +114,5 @@ public class DisplayActivity extends AppCompatActivity {
             }
             return null;
         }
-    }
-
-    public void onDataPass(JSONObject data) {
-        Log.d("TAG", "");
     }
 }
