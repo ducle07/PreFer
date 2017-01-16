@@ -1,6 +1,7 @@
 package eisws1617.PreFer;
 
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -9,8 +10,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DisplayActivity extends AppCompatActivity {
 
@@ -58,20 +65,9 @@ public class DisplayActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
         return super.onOptionsItemSelected(item);
     }
 
-    //deleted PlaceholderFragment class from here
-
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
@@ -80,15 +76,19 @@ public class DisplayActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            switch (position){
+            Bundle extras = getIntent().getExtras();
+
+            switch (position) {
                 case 0:
                     DisplayTabInfoFragment tab1 = new DisplayTabInfoFragment();
                     return tab1;
                 case 1:
                     DisplayTabKarteFragment tab2 = new DisplayTabKarteFragment();
+                    tab2.setArguments(extras);
                     return tab2;
                 case 2:
                     DisplayTabDuengerFragment tab3 = new DisplayTabDuengerFragment();
+                    tab3.setArguments(extras);
                     return tab3;
                 default:
                     return null;
@@ -113,5 +113,9 @@ public class DisplayActivity extends AppCompatActivity {
             }
             return null;
         }
+    }
+
+    public void onDataPass(JSONObject data) {
+        Log.d("TAG", "");
     }
 }

@@ -12,9 +12,9 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-/**
- * Created by DucGiang on 03.12.2016.
- */
+/*
+*   Diese Klasse dient zum Erzeugen und Senden des Tokens für den FCM-Service!
+*/
 
 public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 

@@ -13,11 +13,19 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class AddActivity extends AppCompatActivity implements AddTabInfoFragment.OnDataPass {
+public class AddActivity extends AppCompatActivity
+        implements AddTabKarteFragment.OnDataPass {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -33,6 +41,8 @@ public class AddActivity extends AppCompatActivity implements AddTabInfoFragment
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+
+    JSONObject json = new JSONObject();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,19 +75,27 @@ public class AddActivity extends AppCompatActivity implements AddTabInfoFragment
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.check:
-                Intent intent = new Intent(AddActivity.this, AddActivity.class);
+                EditText editText = (EditText) findViewById(R.id.editText_name);
+                JSONObject tempObject = new JSONObject();
+                try {
+                    tempObject.put("name", editText.getText().toString());
+                    tempObject.put("size", json.get("size"));
+                    JSONArray tempArray = json.getJSONArray("outline");
+                    tempObject.put("outline", tempArray);
+                    sendPOST(tempObject);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                Intent intent = new Intent(AddActivity.this, ListActivity.class);
                 AddActivity.this.startActivity(intent);
-                break;
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
-    //deleted PlaceholderFragment class from here
-
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
@@ -86,16 +104,13 @@ public class AddActivity extends AppCompatActivity implements AddTabInfoFragment
 
         @Override
         public Fragment getItem(int position) {
-            switch (position){
+            switch (position) {
                 case 0:
                     AddTabInfoFragment tab1 = new AddTabInfoFragment();
                     return tab1;
                 case 1:
                     AddTabKarteFragment tab2 = new AddTabKarteFragment();
                     return tab2;
-                case 2:
-                    AddTabDuengerFragment tab3 = new AddTabDuengerFragment();
-                    return tab3;
                 default:
                     return null;
             }
@@ -104,7 +119,7 @@ public class AddActivity extends AppCompatActivity implements AddTabInfoFragment
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 2;
         }
 
         @Override
@@ -114,19 +129,36 @@ public class AddActivity extends AppCompatActivity implements AddTabInfoFragment
                     return "Info";
                 case 1:
                     return "Karte";
-                case 2:
-                    return "Duenger";
             }
             return null;
         }
     }
 
     public void onDataPass(JSONObject data) {
-        try {
-            Log.d("LOG", "hello " + data.get("name"));
-        } catch(JSONException e) {
-            e.printStackTrace();
-        }
+        json = getJSON(data);
+    }
+
+    public JSONObject getJSON(JSONObject json) {
+        return json;
+    }
+
+    public void sendPOST(JSONObject jsonObject) {
+        final String url = "http://192.168.1.12:3000/field";
+
+        JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Response", response.toString());
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("Error.Response", error.getMessage());
+                    }
+                });
+        MySingleton.getInstance(this).addToRequestQueue(postRequest);
     }
 }
 

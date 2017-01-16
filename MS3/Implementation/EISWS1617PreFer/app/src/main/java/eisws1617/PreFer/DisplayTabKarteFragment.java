@@ -60,7 +60,8 @@ public class DisplayTabKarteFragment extends Fragment {
                     mMap.setMyLocationEnabled(true);
                 }
 
-                final String url = "http://192.168.1.12:3000/field/587937f13d79d30acceebc0a";
+                String getArgument = getArguments().getString("name");
+                final String url = "http://192.168.1.12:3000/field?name="+ getArgument;
                 JsonObjectRequest getRequest = new JsonObjectRequest(url, null,
                         new Response.Listener<JSONObject>() {
                             @Override

@@ -4,9 +4,18 @@ module.exports = {
     
     // GET /field
     getAllField: function(req, res, next) {
-        fieldModel.find(function(err, field) {
-            res.send(field);
-        });
+        if(req.query.name !== undefined) {
+            console.log(req.query.name);
+            fieldModel.findOne( {name: req.query.name}, function(err, field) {
+                res.send(field);
+            });
+        } 
+        else {
+            console.log(req.query.name);
+            fieldModel.find(function(err, field) {
+                res.send(field);
+            });
+        }
     },
     
     // POST /field

@@ -34,13 +34,17 @@ import java.util.ArrayList;
 public class AddTabKarteFragment extends Fragment
         implements OnMapClickListener, OnMapReadyCallback {
 
-    AddTabInfoFragment.OnDataPass dataPass;
+    public interface OnDataPass {
+        void onDataPass(JSONObject json);
+    }
+
+    OnDataPass dataPass;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            dataPass = (AddTabInfoFragment.OnDataPass) context;
+            dataPass = (OnDataPass) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
                     + " must implement OnDataPass");
@@ -95,11 +99,11 @@ public class AddTabKarteFragment extends Fragment
         fieldOptions.strokeColor(Color.RED);
         fieldOptions.strokeWidth(2);
 
-        if (fieldArea.size() == 4) {
-            savePolygon();
+        if (fieldArea.size() == 5) {
+            buildJSON();
         }
 
-        if (fieldArea.size() > 4) {
+        if (fieldArea.size() > 5) {
             return;
         } else {
             for (int i = 0; i < fieldArea.size(); i++) {
@@ -113,7 +117,7 @@ public class AddTabKarteFragment extends Fragment
         }
     }
 
-    public void savePolygon() {
+    public void buildJSON() {
         JSONObject json = new JSONObject();
         JSONArray outline = new JSONArray();
 
@@ -130,34 +134,12 @@ public class AddTabKarteFragment extends Fragment
         }
 
         try {
-            json.put("name", "Namefeld");
             json.put("size", fieldSize);
             json.put("outline", outline);
             passData(json);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-        sendPOST(json);
-    }
-
-    public void sendPOST(JSONObject jsonObject) {
-        final String url = "http://192.168.1.12:3000/field";
-
-        JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Log.d("Response", response.toString());
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("Error.Response", error.getMessage());
-                    }
-                });
-        MySingleton.getInstance(getActivity()).addToRequestQueue(postRequest);
     }
 
     public void passData(JSONObject data) {

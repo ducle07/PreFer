@@ -82,9 +82,8 @@ public class ListActivity extends AppCompatActivity {
         lv.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-                Intent intent = new Intent();
-                intent.setClassName(getPackageName(), getPackageName() + ".DisplayActivity");
-                intent.putExtra("selected", lv.getAdapter().getItem(arg2).toString());
+                Intent intent = new Intent(getApplicationContext(), DisplayActivity.class);
+                intent.putExtra("name", lv.getAdapter().getItem(arg2).toString());
                 startActivity(intent);
             }
         });

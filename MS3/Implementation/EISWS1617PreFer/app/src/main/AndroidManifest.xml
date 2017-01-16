@@ -50,7 +50,6 @@
             </intent-filter>
         </service>
         <!-- [END firebase_iid_service] -->
-        <activity android:name=".ShowPolygonActivity" />
         <activity android:name=".ListActivity" />
         <activity
             android:name=".AddActivity"
