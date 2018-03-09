@@ -46,8 +46,8 @@ Source Code: [Android-Client](https://github.com/ducle07/PreFer/tree/master/MS3/
 * Client-server architecture based on the **REST** architecture style
 * Client as a mobile client in **Android**
   * **volley**-library for communication over **HTTP**
-* Server of the distributed application realized with **node.js**
-  * **Express**-module for the realization of the web server
+* Server of the distributed application implemented with **node.js**
+  * **Express**-module for the implementation of the web server
   * Database connection to the NoSQL database **MongoDB** with the **mongoose**-module
 * Data transfer in the format **JSON**
 * Use of the **Google Maps API** (client-side)
