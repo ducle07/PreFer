@@ -12,6 +12,8 @@ Im Projekt hatten wir drei große Meilensteine: Konzept (MS1), Dokumentation (MS
 
 Quellcode: [Android-Client](https://github.com/ducle07/PreFer/tree/master/MS3/Implementation/EISWS1617PreFer) & [node.js-Server](https://github.com/ducle07/PreFer/tree/master/MS3/Implementation/PreFer-Server)
 
+Weitere Informationen in der [Projektdokumentation](https://github.com/ducle07/PreFer/blob/master/MS2/NguyenLe_ProjektdokumentationEISWS1617.pdf)
+
 ## Architektur & verwendete Technologien
 ![Architekturdiagramm](https://github.com/ducle07/PreFer/blob/master/Architekturdiagramm.png)
 
